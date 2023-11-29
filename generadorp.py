@@ -270,8 +270,15 @@ def main():
     process_output(args, tweets)
 
 def validate_args(args):
-    args.start_date  = datetime.strptime(args.start_date, "%d-%m-%y") if args.start_date else datetime.strptime("01-01-00", "%d-%m-%y")  
-    args.end_date  = datetime.strptime(args.end_date, "%d-%m-%y") if args.end_date else datetime.strptime("01-01-29", "%d-%m-%y")
+    if isinstance(args.start_date, str):
+        args.start_date = datetime.strptime(args.start_date, "%d-%m-%y")
+    elif args.start_date is None:
+        args.start_date = datetime.strptime("01-01-00", "%d-%m-%y")
+
+    if isinstance(args.end_date, str):
+        args.end_date = datetime.strptime(args.end_date, "%d-%m-%y")
+    elif args.end_date is None:
+        args.end_date = datetime.strptime("01-01-29", "%d-%m-%y")
 
 if __name__ == "__main__":
     start_time = time.time()
